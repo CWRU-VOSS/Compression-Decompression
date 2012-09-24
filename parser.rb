@@ -52,7 +52,9 @@ while !allSeqArray[arrayIterator].nil?
 	while !allSeqArray[s2Pos].nil?
 		pid = seqHash[allSeqArray[s1Pos]][allSeqArray[s2Pos]]
 		pid = 100 if pid.nil? # HACK. This needs to be fixed.
-		compareFile << "#{s1Pos}, #{s2Pos}, #{pid} \n"
+		s1Act = allSeqArray[s1Pos]
+		s2Act = allSeqArray[s2Pos]
+		compareFile << "#{s1Pos}, #{s2Pos}, #{pid}, #{s1Act[0,3]}#{s2Act[0,3]}\n"
 		s2Pos += 1
 	end
 	arrayIterator += 1
