@@ -59,6 +59,6 @@ while !allSeqArray[arrayIterator].nil?
 end
 
 # Alright, let's make some matrices (I hate arrays in Ruby so I'm not going to use them...)
-fullMatrix = File.new('fullmatrix.csv', 'w+')
+#fullMatrix = File.new('fullmatrix.csv', 'w+')
 
-fullMatrix << " , #{[1..allSeqArray.count].collect{|u| "s#{u} "}}" # header
+#fullMatrix << " , #{[1..allSeqArray.count].collect{|u| "s#{u} "}}" # header
