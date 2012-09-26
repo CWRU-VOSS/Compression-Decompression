@@ -11,6 +11,7 @@ uniqueArrayPos = 1 # Array position counter starts at 1 to match sequence 1 from
 allSeqArray = Array.new # Array for holding all sequences
 allArrayPos = 1 # Array position counter for all sequence array
 seqHash = Hash.new # Hash for holding frequency of sequences
+effortCounter = 0.0 # Used for calculating Average Effort
 
 #We first build an array for all of our unique sequences
 seqFile = File.open(ARGV[0])
@@ -33,7 +34,9 @@ clustalFile.each do |u|
 		seqs = u.match(/s[0-9]{0,5} s[0-9]{0,5}/)[0].split(/ /) # split the seqs into an array of 2 sequences
 		seq1 = uniqueSeqArray[seqs[0].gsub(/s/, '').to_i] #lookup the first sequence
 		seq2 = uniqueSeqArray[seqs[1].gsub(/s/, '').to_i] #lookup its pair
-
+		
+		effortCounter += 100-pid.to_i
+		
 		#here comes the fun part. Create hashes for all sequence lookups with %ID of each pair
 		seqHash[seq1] = Hash.new if not seqHash.key?(seq1)
 		seqHash[seq2] = Hash.new if not seqHash.key?(seq2)
@@ -60,6 +63,7 @@ while !allSeqArray[arrayIterator].nil?
 	arrayIterator += 1
 end
 
+puts "Total Average Effort: #{(effortCounter/allSeqArray.count).to_f/100}"
 # Alright, let's make some matrices (I hate arrays in Ruby so I'm not going to use them...)
 #fullMatrix = File.new('fullmatrix.csv', 'w+')
 
