@@ -34,9 +34,7 @@ clustalFile.each do |u|
 		seqs = u.match(/s[0-9]{0,5} s[0-9]{0,5}/)[0].split(/ /) # split the seqs into an array of 2 sequences
 		seq1 = uniqueSeqArray[seqs[0].gsub(/s/, '').to_i] #lookup the first sequence
 		seq2 = uniqueSeqArray[seqs[1].gsub(/s/, '').to_i] #lookup its pair
-		
-		effortCounter += 100-pid.to_i
-		
+
 		#here comes the fun part. Create hashes for all sequence lookups with %ID of each pair
 		seqHash[seq1] = Hash.new if not seqHash.key?(seq1)
 		seqHash[seq2] = Hash.new if not seqHash.key?(seq2)
@@ -63,8 +61,25 @@ while !allSeqArray[arrayIterator].nil?
 	arrayIterator += 1
 end
 
-puts "Total Average Effort: #{(effortCounter/allSeqArray.count).to_f/100}"
 # Alright, let's make some matrices (I hate arrays in Ruby so I'm not going to use them...)
-#fullMatrix = File.new('fullmatrix.csv', 'w+')
+fullMatrix = File.new('fullmatrix.csv', 'w+')
+fullMatrix <<" , "
 
-#fullMatrix << " , #{[1..allSeqArray.count].collect{|u| "s#{u} "}}" # header
+(1..allSeqArray.count-1).each do |i| # header
+	fullMatrix << "s#{i}, "
+end
+
+fullMatrix << "\n"
+
+(1..allSeqArray.count-1).each do |i|
+	row = ""
+	(1..allSeqArray.count-1).each do |u|
+		if seqHash[allSeqArray[i]].nil? || seqHash[allSeqArray[i]][allSeqArray[u]].nil?
+			pid = 100 
+		else
+			pid = seqHash[allSeqArray[i]][allSeqArray[u]]
+		end
+		row << ", #{pid} "
+	end
+	fullMatrix << "s#{i} #{row} \n"
+end
