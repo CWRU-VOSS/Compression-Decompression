@@ -79,7 +79,16 @@ fullMatrix << "\n"
 		else
 			pid = seqHash[allSeqArray[i]][allSeqArray[u]]
 		end
+		
 		row << ", #{pid} "
+		
+		if u == i+1 # calculating effort
+			effortCounter = 1.0 - (seqHash[allSeqArray[i]][allSeqArray[u]].to_f / 100)
+		end
+		
 	end
 	fullMatrix << "s#{i} #{row} \n"
 end
+
+
+puts "Average Effort = #{effortCounter/allSeqArray.count}"
