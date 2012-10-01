@@ -12,6 +12,7 @@ allSeqArray = Array.new # Array for holding all sequences
 allArrayPos = 1 # Array position counter for all sequence array
 seqHash = Hash.new # Hash for holding frequency of sequences
 effortCounter = 0.0 # Used for calculating Average Effort
+transitions = 0 # Counts the actual number of transitions
 
 #We first build an array for all of our unique sequences
 seqFile = File.open(ARGV[0])
@@ -83,12 +84,13 @@ fullMatrix << "\n"
 		row << ", #{pid} "
 		
 		if u == i+1 # calculating effort
-			effortCounter = 1.0 - (seqHash[allSeqArray[i]][allSeqArray[u]].to_f / 100)
+			effortCounter += 1-(seqHash[allSeqArray[i]][allSeqArray[u]].to_f)/100
+			transitions += 1
 		end
 		
 	end
 	fullMatrix << "s#{i} #{row} \n"
 end
 
-
-puts "Average Effort = #{effortCounter/allSeqArray.count}"
+puts "Total Effort = #{effortCounter}\n"
+puts "Average Effort = #{effortCounter/transitions}"
